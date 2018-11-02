@@ -1,4 +1,4 @@
-export default class DataAccessException extends Error {
+export default class DataAccessError extends Error {
   constructor(message: string) {
     super(message);
   }

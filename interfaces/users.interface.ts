@@ -9,7 +9,7 @@ export default interface UserInterface {
    * @throws ExistingMediaException if such user already exists;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  createUser(user: UserItem): UserItem;
+  createUser(user: UserItem): Promise<UserItem>;
   /**
    * creates new user session;
    * returns new user session token;

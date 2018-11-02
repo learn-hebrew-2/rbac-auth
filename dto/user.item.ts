@@ -1,6 +1,3 @@
-import UserTypeItem from '../dto/user-type.item';
-import UserWordItem from '../dto/user-word.item';
-import UserPhraseItem from '../dto/user-phrase.item';
 import * as mongoose from 'mongoose';
 import * as config from 'config';
 import * as Joi from 'joi';
@@ -10,29 +7,20 @@ export default class UserItem {
   private _name: string;
   private _email: string;
   private _password: string;
-  private _type: string; //UserTypeItem id
-  private _materials: string[];
-  private _words: UserWordItem[];
-  private _phrases: UserPhraseItem[];
+  private _type: string; //Role id
 
   constructor(
     id: string, 
     name: string, 
     email: string, 
     password: string, 
-    type: string, 
-    materials: string[], 
-    words: UserWordItem[], 
-    phrases: UserPhraseItem[]
+    type: string
   ) {
     this._id = id;
     this._name = name;
     this._email = email;
     this._password = password;
     this._type = type;
-    this._materials = materials;
-    this._words = words;
-    this._phrases = phrases;
   }
 
   public static get schema() {
@@ -51,20 +39,11 @@ export default class UserItem {
       type: {
         type: mongoose.Types.ObjectId,
         required: true
-      },
-      materials: {
-        type: [mongoose.Types.ObjectId],
-      },
-      words: {
-        type: [UserWordItem],
-      },
-      phrases: {
-        type: [UserPhraseItem]
       }
     })
   }
 
-  public get model(): mongoose.Model<any> {
+  public static get model(): mongoose.Model<any> {
     const userSchema = UserItem.schema;
     return mongoose.model('User', userSchema);
   }

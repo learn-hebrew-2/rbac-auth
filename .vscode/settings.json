@@ -1,5 +1,7 @@
 {
     "files.exclude": {
+        ".idea": true,
+        ".vscode": true,
         "Project": true
     }
 }
