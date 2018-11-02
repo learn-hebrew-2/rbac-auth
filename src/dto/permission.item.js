@@ -1,20 +1,16 @@
-import mongoose from 'mongoose';
-import Joi from 'joi';
+'use strict'
+const mongoose = require('mongoose');
+const Joi = require('joi');
 
-export default class PermissionItem {
-  id;
-  resource; //rest request
-  method;
-  description; //human readable description
-
+class PermissionItem {
   constructor(id, resource, method, description) {
-    this.id = id;
+    this._id = id;
     this.resource = resource;
     this.method = method;
     this.description = description;
   }
 
-  static getSchema() {
+  static get schema() {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.ObjectId;
     return new Schema({
@@ -23,11 +19,11 @@ export default class PermissionItem {
     });
   }
   
-  static getModel() {
-    return mongoose.model("Permission", PermissionItem.getSchema());
+  static get model() {
+    return mongoose.model("Permission", this.schema);
   }
   
-  static validate(permission) {
+  static validate = (permission) => {
     const schema = {
       resource: Joi.string().max(100).required(),
       method: Joi.string().max(10).required(),
@@ -36,3 +32,5 @@ export default class PermissionItem {
     return Joi.validate(permission, schema);
   }
 }
+
+module.exports = PermissionItem;

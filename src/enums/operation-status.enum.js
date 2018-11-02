@@ -1,4 +1,6 @@
-export enum OperationStatus {
-  OK, ITEM_EXISTS, ITEM_NOT_EXISTS
+module.exports = {
+  'OK': 1,
+  'ITEM_EXISTS': 2,
+  'ITEM_NOT_EXISTS': 3
 }
 

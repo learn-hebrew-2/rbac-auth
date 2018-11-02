@@ -1,9 +1,0 @@
-{
-    "files.exclude": {
-        ".idea": true,
-        ".vscode": true,
-        "**.js.map": true,
-        "**.map": true,
-        "Project": true
-    }
-}
