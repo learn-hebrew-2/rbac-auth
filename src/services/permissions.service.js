@@ -1,10 +1,9 @@
-import PermissionInterface from "../interfaces/permissions.interface";
-import PermissionItem from "../dto/permission.item";
-import * as debuger from 'debug';
+const PermissionItem = require("../dto/permission.item");
+const debuger = require('debug');
 const permissionServiceDebuger = debuger('app:permissionService');
 
-export default class PermissionService implements PermissionInterface {
-    async addPermission(permission: PermissionItem) {
+export default class PermissionService {
+    async addPermission(permission) {
         const model = PermissionItem.getModel()(permission.object);
         try {
             permission = await model.save();
@@ -14,16 +13,16 @@ export default class PermissionService implements PermissionInterface {
             return e;
         }
     }    
-    updatePermission(permission: PermissionItem): PermissionItem {
+    updatePermission(permission) {
         throw new Error("Method not implemented.");
     }
-    removePermission(id: String): PermissionItem {
+    removePermission(id) {
         throw new Error("Method not implemented.");
     }
-    getPermission(id: String): PermissionItem {
+    getPermission(id) {
         throw new Error("Method not implemented.");
     }
-    getPermissions(): PermissionItem[] {
+    getPermissions() {
         throw new Error("Method not implemented.");
     }
 

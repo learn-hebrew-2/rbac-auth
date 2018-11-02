@@ -3,20 +3,16 @@ import PermissionItem from "../dto/permission.item";
 import PermissionService from "../services/permissions.service";
 
 class PermissionsRoutes {
-  private readonly _router: Router;
-  private _permissionService: PermissionService;
+  router;
+  permissionService;
 
   constructor() {
-    this._router = Router();
+    this.router = Router();
     this.setRoutes();
-    this._permissionService = new PermissionService();
+    this.permissionService = new PermissionService();
   }
 
-  get router(): Router {
-    return this._router;
-  }
-
-  setRoutes(): void {
+  setRoutes() {
     this._router.get("/", async (req, res, next) => {
 
     });

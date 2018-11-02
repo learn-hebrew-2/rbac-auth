@@ -1,26 +1,22 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import * as helmet from 'helmet';
-import * as morgan from 'morgan';
-import * as compression from 'compression';
-import usersRoutes from '../routes/users.routes';
-import rolesRoutes from '../routes/roles.routes';
-import permissionsRoutes from '../routes/permissions.routes';
-import checkPermissions from '../middleware/permissions.middleware';
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const compression = require('compression');
+const usersRoutes = require('../routes/users.routes');
+const rolesRoutes = require('../routes/roles.routes');
+const permissionsRoutes = require('../routes/permissions.routes');
+const checkPermissions = require('../middleware/permissions.middleware');
 
 class Server {
-    private _server;
-    
-    public get server() {
-        return this._server;
-    }
+    server;
 
     constructor() {
         this._server = express();
         this.init();
     }
 
-    private init() {
+    init() {
         this._server.use(helmet);
         this._server.use(cors());
         this._server.use(express.json());
