@@ -4,7 +4,8 @@
   "description": "- add word item\r - remove word item\r - update word item\r   - add translation\r   - remove translation\r   - set progress\r   - set study date\r - get word: {all, byId, my regex, by type, by progress}\r - get word translation(google api)\r - get word translations\r - get text translation\r - set word translation\r - set text translation\r - get word local translations\r - get text local translation\r - get GoogleApi word translation\r - get GoogleApi text translation",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "test": "jest",
     "build": "tsc --watch",
     "dev": "ts-node .index.ts",
     "start": "nodemon ./dist/index.js",
@@ -26,6 +27,7 @@
     "compression": "^1.7.3",
     "config": "^2.0.1",
     "cors": "^2.8.4",
+    "debug": "^4.1.0",
     "express": "^4.16.4",
     "helmet": "^3.14.0",
     "joi": "^14.0.1",
@@ -38,7 +40,18 @@
     "winston-mongodb": "^4.0.3"
   },
   "devDependencies": {
-    "debug": "^4.1.0",
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   }
 }

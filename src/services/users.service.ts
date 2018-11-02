@@ -6,11 +6,10 @@ import ExistingMediaException from "../exceptions/existing-media.error";
 import IllegalArgumentExeption from "../exceptions/illegal-argument.error";
 import DBAccessError from '../exceptions/db-access.error';
 
-
 export default class UsersService implements UserInterface {
   private UserModel = UserItem.model;
-
-  async createUser(user: UserItem): Promise<UserItem> {
+  
+  public async createUser(user: UserItem): Promise<UserItem> {
     if (user === null) throw new IllegalArgumentExeption();
 
     try {
@@ -20,15 +19,15 @@ export default class UsersService implements UserInterface {
       throw new DBAccessError(err.message);
     }
 
-    const salt = 
+    const salt = bcrypt.genSalt(10);
+    user.password = bcrypt.hash(user.password, salt);
     
     try {
       const userModel = new this.UserModel(user.object);
-
+      return await userModel.save();
     } catch (err) {
       throw new DBAccessError(err.message);
     }
-    return null;
   }
 
   createUserSession(user: UserItem): string {

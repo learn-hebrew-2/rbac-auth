@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2d05f6ad-072d-4c59-9934-11af2bd7d159" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/lh-back.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lh-back.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dto/user.item.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dto/user.item.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceptions/existing-media.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/existing-media.exception.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exceptions/illegal-argument.exception.ts" beforeDir="false" afterPath="$PROJECT_DIR$/exceptions/illegal-argument.exception.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/interfaces/users.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/users.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/services/users.service.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,6 +50,7 @@
     <session id="965504614">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -100,20 +95,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/services/users.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+            <state relative-caret-position="475">
+              <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/exceptions/existing-media.exception.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="60" selection-start-line="2" selection-start-column="60" selection-end-line="2" selection-end-column="60" />
             </state>
           </provider>
         </entry>
@@ -268,16 +254,15 @@
       <updated>1540850642599</updated>
       <workItem from="1540850643860" duration="1670000" />
       <workItem from="1540853182945" duration="3518000" />
-      <workItem from="1541169272778" duration="1218000" />
+      <workItem from="1541169272778" duration="1490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6406000" />
+    <option name="totallyTimeSpent" value="6678000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -355,8 +340,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/services/users.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+        <state relative-caret-position="475">
+          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
