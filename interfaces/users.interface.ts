@@ -41,7 +41,7 @@ export default interface UserInterface {
    * with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  updateUser(id: string, user: UserItem): UserItem;
+  updateUser(user: UserItem): UserItem;
   /**
    * deletes user record with given user id and
    * returns deleted object;
@@ -52,11 +52,4 @@ export default interface UserInterface {
    * @throws IllegalArgumentException if given data is not valid;
    */
   deleteUser(id: string): UserItem;
-  /**
-   * adds new stat item: UserStatItem into user record with given user id;
-   * @param statItem 
-   * @returns created UserStatItem;
-   * @throws IllegalArgumentException if given data is not valid;
-   */
-  addStatItem(id: string, statItem: UserStatItem): UserStatItem;
 }

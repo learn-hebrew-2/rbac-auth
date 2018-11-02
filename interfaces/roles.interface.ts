@@ -1,13 +1,13 @@
 import PermissionItem from "../dto/permission.item";
+import RoleItem from '../dto/role.item';
 import { OperationStatus } from "../enums/operation-status.enum";
-import UserTypeItem from "../dto/user-type.item";
 
-export default interface AuthenticationInterface {
+export default interface RolesInterface {
   /**
    * @returns array of all user types;
    * @returns empty array if there is no user types;
    */
-  getUserTypes(): UserTypeItem[];
+  getRoles(): RoleItem[];
   /**
    * 
    * @param id 
@@ -15,57 +15,51 @@ export default interface AuthenticationInterface {
    * @throws NoSuchMediaExcepion if there is no user type with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  getUserType(id: string): UserTypeItem;
+  getRole(id: string): RoleItem;
   /**
    * adds new user type item and 
-   * @param userType: UserTypeItem
-   * @returns created user type item record;
+   * @param userType: RoleItem
+   * @returns created RoleItem record;
    * @throws ExistingMediaException if such user type item already exists;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  addUserType(userType: UserTypeItem): UserTypeItem;
+  addRole(role: RoleItem): RoleItem;
   /**
-   * updates user type item with given id;
+   * updates RoleItem with given id;
    * @param id 
    * @param userType 
-   * @returns updated UserTypeItem;
+   * @returns updated RoleItem;
    * @throws NoSuchMediaException if there is no user type item with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  editUserType(id: string, userType: UserTypeItem): UserTypeItem;
+  updateRole(id: string, userType: RoleItem): RoleItem;
   /**
    * deletes user type with given id;
    * @param id 
-   * @returns deleted UserTypeItem;
-   * @throws NoSuchMediaException if there is no UserTypeItem with given id;
+   * @returns deleted RoleItem;
+   * @throws NoSuchMediaException if there is no RoleItem with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
-  deleteUserType(id: string): UserTypeItem;
+  deleteRole(id: string): RoleItem;
   /**
    * @param id of user 
    * @param requirements: PermissionItem[] contains only permisions with will
    * be checked 
    * @returns true if all the requirements are present in
-   * particular UserType with given id;
-   * @throws NoSuchMediaException if there is no UserTypeItem with given id;
+   * particular RoleItem with given id;
+   * @throws NoSuchMediaException if there is no RoleItem with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
   checkPermissions(id: string, requirements: PermissionItem[]): boolean;
   /**
-   * assigns given permissions array to particular UserType with given id;
-   * @param permissions 
-   * @throws NoSuchMediaException if there is no UserTypeItem with given id;
-   */
-  setPermissions(id: string, permissions: PermissionItem[]): OperationStatus;
-  /**
-   * adds given permission to the particular UserType 
-   * @throws NoSuchMediaException if there is no UserTypeItem with given id;
+   * adds given permission to the particular RoleItem 
+   * @throws NoSuchMediaException if there is no RoleItem with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
   addPermissions(id: string, permissions: PermissionItem[]): OperationStatus;
   /**
-   * remove given permission of the particular UserType 
-   * @throws NoSuchMediaException if there is no UserTypeItem with given id;
+   * remove given permission of the particular RoleItem 
+   * @throws NoSuchMediaException if there is no RoleItem with given id;
    * @throws IllegalArgumentException if given data is not valid;
    */
   removePermissions(id: string, permissions: PermissionItem[]): OperationStatus;

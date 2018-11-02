@@ -1,6 +1,6 @@
 import {Router, Request, Response} from 'express';
 
-class Routes {
+class PermissionsRoutes {
   private readonly _router: Router;
 
   constructor() {
@@ -17,4 +17,4 @@ class Routes {
   }
 }
 
-export default new Routes().router;
+export default new PermissionsRoutes().router;
