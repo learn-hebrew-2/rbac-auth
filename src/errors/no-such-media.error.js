@@ -1,5 +1,8 @@
 module.exports = class NoSuchMediaException extends Error {
-  constructor(asset) {
-    super(`${asset} does not exists.`);
+  constructor(message, status) {
+    super(message);
+    this.name = this.constructor.name;
+    Error.captureStackTrace(this, this.constructor);
+    this.status = status || 500;
   }
 }

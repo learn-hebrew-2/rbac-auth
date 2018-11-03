@@ -5,7 +5,7 @@ const debug_startup = require('debug')('app:startup');
 const express = require('express');
 const server = express();
 const config = require('config');
-config = 1;
+// config = 1;
 
 require('./startup/routes')(server);
 require('./startup/dbConnect')();

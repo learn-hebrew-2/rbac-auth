@@ -3,27 +3,39 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 class PermissionItem {
+  
   constructor(id, resource, method, description) {
-    this._id = id;
+    this.id = id;
     this.resource = resource;
     this.method = method;
     this.description = description;
   }
 
-  static get schema() {
+  toJson() {
+    return {
+      _id: this.id,
+      resource: this.resource,
+      method: this.method,
+      description: this.description
+    }
+  }
+
+  static getSchema() {
     const Schema = mongoose.Schema;
     const ObjectId = Schema.ObjectId;
     return new Schema({
       id: {type: ObjectId},
-      resource: {type: String}
+      resource: {type: String},
+      method: {type: String},
+      description: {type: String}
     });
   }
   
-  static get model() {
-    return mongoose.model("Permission", this.schema);
+  static getModel() {
+    return mongoose.model("Permission", PermissionItem.getSchema());
   }
   
-  static validate = (permission) => {
+  static validate (permission) {
     const schema = {
       resource: Joi.string().max(100).required(),
       method: Joi.string().max(10).required(),

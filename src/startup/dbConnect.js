@@ -7,6 +7,7 @@ const config = require('config');
 module.exports = async function () {
     try {
         const db = config.get('db');
+        console.log(db);
         await mongoose.connect(db, { useNewUrlParser: true });
         debug_db(`Connected to ${db}`);
         winston.info(`Connected to ${db}`);
