@@ -19,10 +19,10 @@ class PermissionService {
     async updatePermission(permission) {
         const permissionJson = permission.toJson();
         try{
-            const result = await permissionModel.findByIdAndUpdate(permissionJson._id, 
+            const result = await permissionModel.findByIdAndUpdate(permissionJson.id, 
                 _.pick(permissionJson, ["resource", "method", "description"]),
                 { new: true });
-            if(!result) throw new NoSuchMediaException("Permission with the given ID was not found.", "400")
+            if(!result) throw new NoSuchMediaException("Permission")
             return result;
         } catch(e) {
             permissionServiceDebuger(e);

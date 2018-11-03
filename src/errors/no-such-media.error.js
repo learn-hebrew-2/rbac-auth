@@ -3,6 +3,6 @@ module.exports = class NoSuchMediaError extends Error {
     super(`${message} with given parama was not found.`);
     this.name = this.constructor.name;
     Error.captureStackTrace(this, this.constructor);
-    this.status = status || 500;
+    this.status = status || 404;
   }
 }

@@ -1,9 +1,6 @@
-// process.env.NODE_ENV=test;
-// const config = require('config');
-const PermissionService = require('../../src/services/permissions.service');
-const permissionModel = require('../../src/dto/permission.item').model;
+const PermissionItem = require('../../src/dto/permission.item');
+const permissionModel = PermissionItem.model;
 const request = require('supertest');
-// const permissionModel = PermissionItem.getModel();
 let server;
 
 describe('/api/permission', () => {
@@ -11,7 +8,7 @@ describe('/api/permission', () => {
         server = require('../../src/index.js');
     });
     afterEach(async () => {
-        // await permissionModel.remove({});
+        await permissionModel.remove({});
         server.close();
     });
     describe('POST /', () => {
@@ -30,6 +27,23 @@ describe('/api/permission', () => {
             const record = permissionModel.find({resource: "test resourse" });
             expect(record).not.toBeNull();
         });
+        it('should return status 400, shortfall', async () => {
+            item = {
+                resource: "test resourse",
+                description: "test description"
+            }
+            const result = await exec();
+            expect(result.status).toBe(400);
+        });
+        it('should return status 400, no valid resourse', async () => {
+            item = {
+                resource: "",
+                method: "test method",
+                description: "test description"
+            }
+            const result = await exec();
+            expect(result.status).toBe(400);
+        });
         it('should save permission item', async () => {
             item = {
                 resource: "test resourse",
@@ -40,13 +54,102 @@ describe('/api/permission', () => {
             expect(record).not.toBeNull();
         });
     });
-    // desctribe('GET /', () => {
-
-    // });
-    // desctribe('PUT /', () => {
-
-    // });
-    // desctribe('DELETE /', () => {
+    describe('GET /', () => {
+        const items = [
+            {
+                resource: "resourse_1",
+                method: "method_1",
+                description: "description_1"
+            },
+            {
+                resource: "resourse_2",
+                method: "method_2",
+                description: "description_2"
+            },
+            {
+                resource: "resourse_3",
+                method: "method_3",
+                description: "description_3"
+            }
+        ];
+        const exec = async () => {
+            return await request(server).get('/api/permissions').send();
+        };
+        it('should return array of permission items', async () => {
+            await permissionModel.insertMany(items);
+            const res = await exec();
+            expect(res.status).toBe(200);
+            expect(res.body.length).toBe(3);
+            expect(res.body.some(item => item.resource === 'resourse_1')).toBeTruthy();
+            expect(res.body.some(item => item.resource === 'resourse_2')).toBeTruthy();
+        });
+    });
+    describe('GET /:id', () => {
+        it('should return permission item by given id', async () => {
+            const item = {
+                resource: "resourse_1",
+                method: "method_1",
+                description: "description_1"
+            }
+            const permisionItem = permissionModel(item);
+            await permisionItem.save();
+            const res = await request(server).get('/api/permissions/'+permisionItem._id);
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('resource', 'resourse_1');
+        });
+        it('should return status 400, wrong id', async () => {
+            const res = await request(server).get('/api/permissions/1234');
+            expect(res.status).toBe(400);
+        });
+    });
+    describe('PUT /:id', () => {
+        it('should return status 200 and update permission item', async () => {
+            const item = {
+                resource: "resource_1",
+                method: "method_1",
+                description: "description_1"
+            }
+            const newItem = {
+                resource: "resource_2",
+                method: "method_2",
+                description: "description_3"
+            }
+            const permisionItem = permissionModel(item);
+            await permisionItem.save();
+            const res = await request(server).put('/api/permissions/'+permisionItem._id)
+                .send(newItem);
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('resource', 'resource_2');
+        });
+        it('should return status 400 not valid description field', async () => {
+            const item = {
+                resource: "resource_1",
+                method: "method_1",
+                description: ""
+            }
+            const newItem = {
+                resource: "resource_2",
+                method: "method_2",
+                description: ""
+            }
+            const permisionItem = permissionModel(item);
+            await permisionItem.save();
+            const res = await request(server).put('/api/permissions/'+permisionItem._id)
+                .send(newItem);
+            expect(res.status).toBe(400);
+        });
+        it('should return status 400, wrong id in put request', async () => {
+            const newItem = {
+                resource: "resource_2",
+                method: "method_2",
+                description: "description_3"
+            }
+            const res = await request(server).put('/api/permissions/1234')
+                .send(newItem);
+            expect(res.status).toBe(400);
+        });
+    });
+    // describe('DELETE /', () => {
 
     // });
 });

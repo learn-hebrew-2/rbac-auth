@@ -39,11 +39,9 @@ router.put("/:id", async (req, res) => {
   const permission = new PermissionItem(req.params.id, req.body.resource, req.body.method, req.body.description);
   permissionService.updatePermission(permission).then(
     result => {
-      console.log("success");
       return res.send(result);
     },
     error => {
-      console.log("error");
       return res.status(400).send(error);
     }
   );
