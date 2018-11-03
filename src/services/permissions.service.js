@@ -1,7 +1,7 @@
 const PermissionItem = require("../dto/permission.item");
 const debuger = require('debug');
 const permissionServiceDebuger = debuger('app:permissionService');
-const permissionModel = PermissionItem.getModel()
+const permissionModel = PermissionItem.model;
 var _ = require('lodash');
 const NoSuchMediaException = require("../errors/no-such-media.error");
 
