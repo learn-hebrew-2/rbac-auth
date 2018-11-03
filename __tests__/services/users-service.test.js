@@ -23,27 +23,27 @@ describe('creation of new user in mongodb', () => {
     // await UsersModel.remove({});
   });
 
-  it('should throw IllegalArgument error with not valid input', async () => {
-    let res;
-    try {
-      await createUser();
-    } catch (err) {
-      res = err;
-    }
-    expect(res).toEqual(new IllegalArgumentError('user'));
-  });
+  // it('should throw IllegalArgument error with not valid input', async () => {
+  //   let res;
+  //   try {
+  //     await createUser();
+  //   } catch (err) {
+  //     res = err;
+  //   }
+  //   expect(res).toEqual(new IllegalArgumentError('user'));
+  // });
 
   it('should throw ExistingMediaError if user to create already exists', async () => {
 
   });
 
-  it('should create new user record if such user does not exists', async () => {
-    const user = usersTestData[3];
-    const res = await createUser(user);
-    expect(_.pick(res, ['name', 'email', 'password']))
-      .toMatchObject(_.pick(user, ['name', 'email', 'password']));
-    expect(res.type.equals(user.type)).toBeTruthy();
-  });
+  // it('should create new user record if such user does not exists', async () => {
+  //   const user = usersTestData[3];
+  //   const res = await createUser(user);
+  //   expect(_.pick(res, ['name', 'email', 'password']))
+  //     .toMatchObject(_.pick(user, ['name', 'email', 'password']));
+  //   expect(res.type.equals(user.type)).toBeTruthy();
+  // });
 });
 
 describe('createUserDbRecord', () => {
