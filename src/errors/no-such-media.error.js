@@ -1,4 +1,4 @@
-module.exports = class NoSuchMediaException extends Error {
+module.exports = class NoSuchMediaError extends Error {
   constructor(message, status) {
     super(message);
     this.name = this.constructor.name;
