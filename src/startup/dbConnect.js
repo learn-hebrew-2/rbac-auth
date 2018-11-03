@@ -10,7 +10,7 @@ module.exports = async function () {
         console.log(db);
         await mongoose.connect(db, { useNewUrlParser: true, useFindAndModify: false });
         debug_db(`Connected to ${db}`);
-        winston.info(`Connected to ${db}`);
+        // winston.info(`Connected to ${db}`);
     } catch (err) {
         debug_db(err.message);
     }

@@ -1,4 +1,17 @@
 {
     "jwtPrivateKey": "",
-    "db": ""
+    "db": "",
+    "validation": {
+        "user": {
+            "name": {
+                "min": 1,
+                "max": 30
+            },
+            "email": {
+                "min": 1,
+                "max": 30,
+                "regexp": "/.*/"
+            }
+        }
+    }
 }
