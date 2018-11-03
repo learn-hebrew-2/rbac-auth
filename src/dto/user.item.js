@@ -4,35 +4,11 @@ const Joi = require('joi');
 
 class UserItem {
   constructor(id, name, email, password, type) {
-    id = id;
-    name = name;
-    email = email;
-    password = password;
-    type = type;
-  }
-
-  static get schema() {
-    const { name, email } = config.get('validation.user');
-    return new mongoose.Schema({
-      name: {
-        type,
-        minlength: name.min,
-        maxlength: name.max,
-        required: true
-      },
-      email: {
-        type,
-        match: email.regexp
-      },
-      type: {
-        type: mongoose.Types.ObjectId,
-        required: true
-      }
-    })
-  }
-
-  static get model() {
-    return mongoose.model('User', this.schema);
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.type = type;
   }
 
   validate(user) {
@@ -44,6 +20,40 @@ class UserItem {
     }
     return Joi.validate(user, userSchema);
   }
+
+  toString() {
+    return `{\n
+      id:${this.id}\n
+      name:${this.name}\n
+      email:${this.email}\n
+      password:${this.password}\n
+      type:${this.type}`;
+  }
 }
 
-module.exports = UserItem;
+const { name, email } = config.get('validation.user');
+const schema = new mongoose.Schema({
+  name: {
+    type: String,
+    minlength: name.min,
+    maxlength: name.max,
+    required: true
+  },
+  email: {
+    type: String,
+    unique: true
+  },
+  password: {
+    type: String,
+  },
+  type: {
+    type: mongoose.Types.ObjectId,
+    required: true
+  }
+})
+
+const model = mongoose.model('User', schema);
+
+module.exports.UserItem = UserItem;
+module.exports.schema = schema;
+module.exports.model = model;

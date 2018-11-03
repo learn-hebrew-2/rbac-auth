@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
-const UserItem = require('../dto/user.item');
+const debug_user = require('debug')('app:ctrl-user');
+const { UserItem, schema, model } = require('../dto/user.item');
 const IllegalArgumentError = require('../errors/illegal-argument.error');
 const ExistingMediaError = require('../errors/existing-media.error');
 const DBAccessError = require('../errors/db-access.error');
@@ -24,11 +25,14 @@ async function createUser(user) {
  * @returns created db user record;
  * @throws DBAccessError if there is a problem with db connection;
  */
-function createUserDbRecord(user) {
+async function createUserDbRecord(user) {
+  // debug_user(user);
   try {
-    const userModel = new UserItem.model(user.object);
-    return await userModel.save();
+    const UserModel = new model(user);
+    return await UserModel.save();
   } catch (err) {
+    debug_user(err.message);
+    console.log(err)
     throw new DBAccessError(err.message);
   }
 }
@@ -37,9 +41,9 @@ function createUserDbRecord(user) {
  * @param {*} user 
  * returns true if user exists / false if user does not exists;
  */
-function checkUserExists(user) {
-  const user = getUserByEmail(user.email);
-  return user ? true : false;
+async function checkUserExists(user) {
+  const res = await getUserByEmail(user.email);
+  return res ? true : false;
 }
 /**
  * @param {string} email 
@@ -47,9 +51,9 @@ function checkUserExists(user) {
  * @returns null if there is no user records in data base with give email;
  * @throws DBAccessError if there is a problem with db connection;
  */
-function getUserByEmail(email) {
+async function getUserByEmail(email) {
   try {
-    return await UserItem.model.findOne({ email: email });
+    return await model.findOne({ email: email });
   } catch (err) {
     throw new DBAccessError(err.message);
   }
