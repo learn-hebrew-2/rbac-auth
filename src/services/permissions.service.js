@@ -13,30 +13,51 @@ class PermissionService {
             return await model.save();
         } catch(e) {
             permissionServiceDebuger(e.message);
-            return e;
+            throw e;
         }
     }    
     async updatePermission(permission) {
-        throw new Error("Method not implemented.");
+        const permissionJson = permission.toJson();
+        try{
+            const result = await permissionModel.findByIdAndUpdate(permissionJson._id, 
+                _.pick(permissionJson, ["resource", "method", "description"]),
+                { new: true });
+            if(!result) throw new NoSuchMediaException("Permission with the given ID was not found.", "400")
+            return result;
+        } catch(e) {
+            permissionServiceDebuger(e);
+            throw e;
+        }
     }
     async removePermission(id) {
-        throw new Error("Method not implemented.");
+        try {
+            const result = await permissionModel.findByIdAndRemove(id);
+            if(!result) throw new NoSuchMediaException("Permission with the given ID was not found.")
+            return result;
+        } catch(e) {
+            permissionServiceDebuger(e);
+            throw e;
+        }
     }
     async getPermission(id) {
         try {
             const result = await permissionModel.findById(id);
             if(!result) {
-                console.log("The Permission with the given ID was not found.");
-                throw new NoSuchMediaException("Permission with the given ID was not found.")
+                throw new NoSuchMediaException("Permission with the given ID was not found.", "400")
             }
             return result;
         } catch(e) {
-            permissionServiceDebuger(e.message);
-            return e;
+            throw e;
         }
     }
     async getPermissions() {
-        throw new Error("Method not implemented.");
+        try {
+            const result = await permissionModel.find();
+            return result;
+        } catch(e) {
+            permissionServiceDebuger(e.message);
+            throw e;
+        }
     }
 
 }

@@ -8,7 +8,7 @@ module.exports = async function () {
     try {
         const db = config.get('db');
         console.log(db);
-        await mongoose.connect(db, { useNewUrlParser: true });
+        await mongoose.connect(db, { useNewUrlParser: true, useFindAndModify: false });
         debug_db(`Connected to ${db}`);
         winston.info(`Connected to ${db}`);
     } catch (err) {
