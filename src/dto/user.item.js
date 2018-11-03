@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const Joi = require('joi');
 
-export default class UserItem {
+class UserItem {
   constructor(id, name, email, password, type) {
     id = id;
     name = name;
@@ -35,7 +35,7 @@ export default class UserItem {
     return mongoose.model('User', this.schema);
   }
 
-  validate = (user) => {
+  validate(user) {
     const { name, email } = config.get('validation.user');
     const userSchema = {
       name: Joi.string().min(name.min).max(name.max).required(),
@@ -45,3 +45,5 @@ export default class UserItem {
     return Joi.validate(user, userSchema);
   }
 }
+
+module.exports = UserItem;

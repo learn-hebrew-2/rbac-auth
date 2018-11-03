@@ -4,7 +4,7 @@
   "description": "- add word item\r - remove word item\r - update word item\r   - add translation\r   - remove translation\r   - set progress\r   - set study date\r - get word: {all, byId, my regex, by type, by progress}\r - get word translation(google api)\r - get word translations\r - get text translation\r - set word translation\r - set text translation\r - get word local translations\r - get text local translation\r - get GoogleApi word translation\r - get GoogleApi text translation",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "NODE_ENV= jest --watchAll",
     "start": "nodemon ./src/index.js"
   },
   "repository": {
@@ -37,7 +37,8 @@
     "winston-mongodb": "^4.0.3"
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "supertest": "^3.3.0"
   },
   "jest": {
     "moduleFileExtensions": [
