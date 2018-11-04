@@ -16,18 +16,21 @@ describe('/api/permission', () => {
         const exec = async () => {
             return await request(server).post('/api/permissions').send(item);
         };
-        it('should return status 200', async () => {
+        it('should return status 200 and save permission item', async () => {
             item = {
                 resource: "test resourse",
                 method: "test method",
                 description: "test description"
             }
-            const result = await exec();
-            expect(result.status).toBe(200);
-            const record = permissionModel.find({resource: "test resourse" });
-            expect(record).not.toBeNull();
+            const res = await exec();
+            expect(res.status).toBe(200);
+            expect(res).not.toBeNull();
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('resource', 'test resourse');
+            const record = await permissionModel.find({'resource': 'test resourse' });
+            expect(record.length).toBeGreaterThan(0);
         });
-        it('should return status 400, shortfall', async () => {
+        it('should return status 400, shortfall resource', async () => {
             item = {
                 resource: "test resourse",
                 description: "test description"
@@ -35,7 +38,7 @@ describe('/api/permission', () => {
             const result = await exec();
             expect(result.status).toBe(400);
         });
-        it('should return status 400, no valid resourse', async () => {
+        it('should return status 400, no valid resource', async () => {
             item = {
                 resource: "",
                 method: "test method",
@@ -43,15 +46,6 @@ describe('/api/permission', () => {
             }
             const result = await exec();
             expect(result.status).toBe(400);
-        });
-        it('should save permission item', async () => {
-            item = {
-                resource: "test resourse",
-                method: "test method",
-                description: "test description"
-            }
-            const record = permissionModel.find({resource: "test resourse" });
-            expect(record).not.toBeNull();
         });
     });
     describe('GET /', () => {
@@ -97,9 +91,13 @@ describe('/api/permission', () => {
             expect(res.status).toBe(200);
             expect(res.body).toHaveProperty('resource', 'resourse_1');
         });
-        it('should return status 400, wrong id', async () => {
+        it('should return status 400, not valid id', async () => {
             const res = await request(server).get('/api/permissions/1234');
             expect(res.status).toBe(400);
+        });
+        it('should return status 404, not exist record by given id', async () => {
+            const res = await request(server).get('/api/permissions/5bdebbd5d5b45451a466668e');
+            expect(res.status).toBe(404);
         });
     });
     describe('PUT /:id', () => {
@@ -149,7 +147,26 @@ describe('/api/permission', () => {
             expect(res.status).toBe(400);
         });
     });
-    // describe('DELETE /', () => {
-
-    // });
+    describe('DELETE /', () => {
+        it('should return status 200 and remove reecord', async () => {
+            let item = {
+                resource: "resource_delete",
+                method: "method_delete",
+                description: "description_delete"
+            }
+            const permisionItem = permissionModel(item);
+            item = await permisionItem.save();
+            const res = await request(server).delete('/api/permissions/'+item._id);
+            expect(res.status).toBe(200);
+            expect(res.body).toHaveProperty('resource', 'resource_delete');
+        });
+        it('should return status 400, invalid id', async () => {
+            const res = await request(server).delete('/api/permissions/1234');
+            expect(res.status).toBe(400);
+        });
+        it('should return status 404, not exist id', async () => {
+            const res = await request(server).delete('/api/permissions/5bdebbd5d5b45451a466668e');
+            expect(res.status).toBe(404);
+        });
+    });
 });

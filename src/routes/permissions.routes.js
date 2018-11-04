@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const result = await permissionService.getPermissions();
     res.send(result);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(e.status || 500).send(e);
   }
 });
 router.get("/:id", async (req, res) => {
@@ -18,7 +18,7 @@ router.get("/:id", async (req, res) => {
     const result = await permissionService.getPermission(id);
     res.send(result);
   } catch (e) {
-    res.status(400).send(e);
+    res.status(e.status || 500).send(e);
   }
 });
 router.post("/", async (req, res) => {
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
     const result = await permissionService.addPermission(permission);
     return res.send(result);
   } catch (e) {
-    return res.status(400).send(e);
+    return res.status(e.status || 500).send(e);
   }
 });
 router.put("/:id", async (req, res) => {
@@ -42,7 +42,7 @@ router.put("/:id", async (req, res) => {
       return res.send(result);
     },
     error => {
-      return res.status(400).send(error);
+      return res.status(error.status || 500).send(error);
     }
   );
 });
@@ -51,7 +51,7 @@ router.delete("/:id", async (req, res) => {
     const result = await permissionService.removePermission(req.params.id);
     return res.send(result);
   } catch(e) {
-    return res.status(400).send(e);
+    return res.status(e.status || 500).send(e);
   }
   
 });
