@@ -7,9 +7,9 @@ const server = express();
 const config = require('config');
 // config = 1;
 
-require('./startup/routes')(server);
-require('./startup/dbConnect')();
-require('./startup/logging');
+require('./src/startup/routes')(server);
+require('./src/startup/dbConnect')();
+require('./src/startup/logging');
 
 
 const port = process.env.PORT || 4311;

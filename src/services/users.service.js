@@ -80,7 +80,6 @@ async function getUserByEmail(email) {
 /**
    * @returns all users records from db,;
    * @returns empty array in the case if there is no records in users collection;
-   * @throws IllegalArgumentException if given data is not valid;
    */
 async function getAllUsers() {
   let users;

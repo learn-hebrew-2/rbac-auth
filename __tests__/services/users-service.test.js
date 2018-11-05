@@ -13,14 +13,13 @@ const IllegalArgumentError = require('../../src/errors/illegal-argument.error');
 const ExistingMediaError = require('../../src/errors/existing-media.error');
 const DataAccessError = require('../../src/errors/data-access.error');
 const NoSuchMediaError = require('../../src/errors/no-such-media.error');
-
 // ASSETS
 const usersTestData = require('../../data/users');
 let serverInstance;
 
 describe('USERS SERVICE TESTS', () => {
   beforeEach(async () => {
-    serverInstance = require('../../src/index');
+    serverInstance = require('../../index');
     await model.deleteMany({});
   });
   afterEach(async () => {
