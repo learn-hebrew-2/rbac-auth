@@ -5,11 +5,11 @@ let server;
 
 describe('/api/permission', () => {
     beforeEach(() => {
-        server = require('../../src/index.js');
+        server = require('../../index.js');
     });
     afterEach(async () => {
         await permissionModel.remove({});
-        server.close();
+        await server.close();
     });
     describe('POST /', () => {
         let item;
