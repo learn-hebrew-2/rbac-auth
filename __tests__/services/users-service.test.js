@@ -23,7 +23,7 @@ describe('USERS SERVICE TESTS', () => {
     await model.deleteMany({});
   });
   afterEach(async () => {
-    serverInstance.close();
+    await serverInstance.close();
     await model.deleteMany({});
   });
   // --- CREATE USER TESTS --- //
