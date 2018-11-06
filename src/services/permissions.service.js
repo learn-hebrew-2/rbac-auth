@@ -14,7 +14,7 @@ class PermissionService {
         try {
             return await model.save();
         } catch(e) {
-            permissionServiceDebuger(e);
+            // permissionServiceDebuger(e);
             throw e;
         }
     }    
@@ -29,7 +29,7 @@ class PermissionService {
             if(!result) throw new NoSuchMediaException("Permission")
             return result;
         } catch(e) {
-            permissionServiceDebuger(e);
+            // permissionServiceDebuger(e);
             throw e;
         }
     }
@@ -41,7 +41,7 @@ class PermissionService {
             if(!result) throw new NoSuchMediaException("Permission")
             return result;
         } catch(e) {
-            permissionServiceDebuger(e);
+            // permissionServiceDebuger(e);
             throw e;
         }
     }
@@ -63,7 +63,7 @@ class PermissionService {
             const result = await permissionModel.find();
             return result;
         } catch(e) {
-            permissionServiceDebuger(e);
+            // permissionServiceDebuger(e);
             throw e;
         }
     }
