@@ -24,25 +24,24 @@ class PermissionItem {
   static getSchema() {
     return this.schema;
   }
-  
-  static getModel() {
-    return this.model;
+  static getJoiSchema() {
+    return {
+      resource: Joi.string().min(1).max(100).required(),
+      method: Joi.string().min(1).max(100).required(),
+      description: Joi.string().min(1).max(200)
+    }
   }
   
   static validate (permission) {
-    const schema = {
-      resource: Joi.string().min(1).max(100).required(),
-      method: Joi.string().min(1).max(100).required(),
-      description: Joi.string().min(1).max(100).required()
-    };
-    return Joi.validate(permission, schema);
+    return Joi.validate(permission, PermissionItem.getJoiSchema());
   }
+
 }
 PermissionItem.schema = new Schema({
   id: {type: ObjectId},
-  resource: {type: String},
-  method: {type: String},
-  description: {type: String}
+  resource: {type: String, unique: true, min: 1, max: 100},
+  method: {type: String, min: 1, max: 100},
+  description: {type: String, default: null, min: 1, max: 200}
 });
 PermissionItem.model = mongoose.model("Permission", PermissionItem.getSchema());
 

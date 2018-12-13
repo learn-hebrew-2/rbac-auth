@@ -4,12 +4,13 @@ const request = require('supertest');
 let server;
 
 describe('/api/permission', () => {
-    beforeEach(() => {
-        server = require('../../index.js');
-    });
-    afterEach(async () => {
+	beforeEach(async () => {
+        server = require('../../src/index.js');
         await permissionModel.remove({});
+	});
+    afterEach(async () => {
         await server.close();
+        await permissionModel.remove({});
     });
     describe('POST /', () => {
         let item;
@@ -30,7 +31,7 @@ describe('/api/permission', () => {
             const record = await permissionModel.find({'resource': 'test resourse' });
             expect(record.length).toBeGreaterThan(0);
         });
-        it('should return status 400, shortfall resource', async () => {
+        it('should return status 400, shortfall method', async () => {
             item = {
                 resource: "test resourse",
                 description: "test description"
