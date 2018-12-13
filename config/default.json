@@ -1,6 +1,7 @@
 {
     "jwtPrivateKey": "",
     "db": "mongodb://localhost/rbac-auth",
+    "PORT": "2353",
     "validation": {
         "user": {
             "name": {
@@ -12,6 +13,10 @@
                 "max": 30,
                 "regexp": "/.*/"
             }
+        },
+        "boundaries": {
+            "min": 0,
+            "max": ""
         }
     }
 }

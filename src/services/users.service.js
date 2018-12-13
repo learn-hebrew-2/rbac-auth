@@ -19,15 +19,19 @@ const jwt = require('jsonwebtoken');
    * @throws IllegalArgumentException if given data is not valid;
    */
 async function createUser(user) {
-  if (user == null || user.name == null || user.email == null || user.password == null || user.type == null) {
+  if (!user || !user.name || !user.email || !user.password || !user.type) {
     throw new IllegalArgumentError();
   }
   if (await checkUserExists(user)) {
     throw new ExistingMediaError('User');
   }
+  console.log('create user 1');
+  
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
-  return await createUserDbRecord(user);
+  const res = await createUserDbRecord(user);
+  debug_user(res);
+  return res;
 }
 /**
  * creates new user record in data base;
@@ -39,8 +43,10 @@ async function createUserDbRecord(user) {
   if (!user || user.name == null || user.email == null || user.password == null || user.type == null) {
     throw new IllegalArgumentError();
   }
+  console.log('create user :', user);
   try {
     const UserModel = new model(user);
+    console.log('UserModel :', UserModel);
     return await UserModel.save();
   } catch (err) {
     debug_user(err.message);
@@ -100,7 +106,8 @@ async function getAllUsers() {
   async function getUsers(first, last) {
     if (typeof first != 'number' || typeof last != 'number' || arguments.length != 2 || isNaN(first) || isNaN(last) || !isFinite(first) || !isFinite(last)) {
       throw new IllegalArgumentError();
-  }
+    }
+    console.log('get args', first, last)
   let users;
   try {
     users = await model
@@ -155,20 +162,23 @@ async function deleteUser(id) {
    * @throws IllegalArgumentException if given data is not valid;
    */
 async function updateUser(user) {
-  if (!user || typeof user !== 'object') {
+  if (!user || typeof user !== 'object' || !user.id) {
     throw new IllegalArgumentError();
   }
-  const dbUser = await getUser(user._id);
+  const dbUser = await getUser(user.id);
+  console.log('db usr', dbUser)
   if (!dbUser) {
     throw new NoSuchMediaError('user');
   }
-  console.log('old db user', dbUser)
+  if (user.password) {
+    const salt = bcrypt.genSalt(10);
+    user.password = bcrypt.hash(user.password, salt);
+  }
   for(let field in user) {
     dbUser[field] = user[field];
   }
-  console.log('new db user', dbUser)
   try {
-    const res = await model.findByIdAndUpdate(user._id, dbUser, { new: false });
+    const res = await model.updateOne({_id: user.id}, dbUser);
     console.log('updated', res);
     return res;
   } catch (err) {
@@ -189,7 +199,7 @@ async function createUserSession(user) {
   if (!isPassValid) {
     throw new DataAccessError('user');
   }
-  const token = dbUser.generateAuthToken();
+  const token = await dbUser.generateAuthToken();
   return token;
 }
 

@@ -12,9 +12,8 @@ require('./src/startup/dbConnect')();
 require('./src/startup/logging');
 
 
-const port = process.env.PORT || 4311;
+const port = process.env.PORT || config.get('PORT') || 4311;
 const serverInstance = server.listen(port, () => {
     debug_startup(`server listenning on port ${port}`);
 });
-
 module.exports = serverInstance;

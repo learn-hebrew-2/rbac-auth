@@ -1,4 +1,4 @@
 {
     "jwtPrivateKey": "",
-    "db": "mongodb://localhost/rbac-auth"
+    "PORT": "45000"
 }

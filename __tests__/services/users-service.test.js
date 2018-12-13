@@ -28,6 +28,8 @@ describe('USERS SERVICE TESTS', () => {
   });
   // --- CREATE USER TESTS --- //
   describe('CREATE USER TESTS', () => {
+    it('should fail', () => {});
+    
     describe('createUser', () => {
       it('should throw IllegalArgument error with not valid input', async () => {
         let res;
@@ -42,7 +44,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         };
       });
 
@@ -77,7 +79,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         }
       });
 
@@ -110,7 +112,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         }
       });
 
@@ -155,7 +157,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         }
       });
 
@@ -194,6 +196,7 @@ describe('USERS SERVICE TESTS', () => {
         const user = await model.findOne({ email: usersTestData[1]['email'] });
         const userId = user._id;
         const res = await getUser(userId);
+        console.log('get user res', res)
         expect(res).toHaveProperty('_id');
         expect(_.pick(res, ['name', 'email', 'password']))
           .toMatchObject(_.pick(user, ['name', 'email', 'password']));
@@ -211,7 +214,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         }
       });
 
@@ -260,7 +263,7 @@ describe('USERS SERVICE TESTS', () => {
           } catch (err) {
             res = err;
           }
-          expect(res).toEqual(new IllegalArgumentError('user'));
+          expect(res).toBeInstanceOf(IllegalArgumentError);
         }
       });
 
@@ -302,14 +305,14 @@ describe('USERS SERVICE TESTS', () => {
         } catch (err) {
           res = err;
         }
-        expect(res).toEqual(new IllegalArgumentError('user'));
+        expect(res).toBeInstanceOf(IllegalArgumentError);
       }
       try {
         await createUserSession({ email: 'asdf' });
       } catch (err) {
         res = err;
       }
-      expect(res).toEqual(new IllegalArgumentError('user'));
+      expect(res).toBeInstanceOf(IllegalArgumentError);
     });
 
     it('should throw NoSuchMediaError if there is no user with given email', async () => {
@@ -336,9 +339,8 @@ describe('USERS SERVICE TESTS', () => {
 
     it('should create new user token', async () => {
       const user = { email: 'email', password: 'password', name: 'name', type: mongoose.Types.ObjectId() };
-      await createUser(user);
-      const user1 = { email: 'email', password: 'password', name: 'name', type: mongoose.Types.ObjectId() };
-      const token = await createUserSession(user1);
+      await createUser(_.pick(user, ['email', 'password', 'name', 'type']));
+      const token = await createUserSession(_.pick(user, ['email', 'password']));
       expect(jwt.verify(token, config.get('jwtPrivateKey')))
         .toHaveProperty('name', user.name);
       expect(jwt.verify(token, config.get('jwtPrivateKey')))

@@ -4,22 +4,12 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 
 class UserItem {
-  constructor(id, name, email, password, type) {
+  constructor (id, name, email, password, type) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
     this.type = type;
-  }
-
-  validate(user) {
-    const { name, email } = config.get('validation.user');
-    const userSchema = {
-      name: Joi.string().min(name.min).max(name.max).required(),
-      email: Joi.string().min(email.min).max(email.max).required(),
-      type: Joi.any().required(),
-    }
-    return Joi.validate(user, userSchema);
   }
 
   toString() {
